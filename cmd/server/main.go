@@ -1,20 +1,25 @@
 package main
 
 import (
-	"io/ioutil"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/souvikhaldar/loggator/pkg/db"
+	"github.com/souvikhaldar/loggator/pkg/logs"
 )
 
 type server struct {
 	router *mux.Router
+	logger logs.Repository
 }
 
 func NewServer() *server {
 	return &server{
 		router: mux.NewRouter(),
+		logger: db.NewDB(),
 	}
 }
 
@@ -25,12 +30,27 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // handleLogsPost handles logs as a string and stores it
 func (s *server) handleLogsPost() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			http.Error(w, "Could not parse the body", http.StatusBadRequest)
+		ld := new(logs.LogData)
+		if err := json.NewDecoder(r.Body).Decode(ld); err != nil {
+			err = fmt.Errorf("Error in parsing payload: %s", err)
+			log.Println(err)
+			http.Error(
+				w,
+				err.Error(),
+				http.StatusInternalServerError,
+			)
 			return
 		}
-		log.Println("Body: ", string(body))
+		if err := s.logger.StoreLog(*ld); err != nil {
+			err = fmt.Errorf("Error in storing data: %s", err)
+			log.Println(err)
+			http.Error(
+				w,
+				err.Error(),
+				http.StatusInternalServerError,
+			)
+			return
+		}
 	}
 }
 

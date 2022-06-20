@@ -3,8 +3,8 @@ package logs
 import "time"
 
 type Repository interface {
-	StoreLog(log string) error
-	FetchLog() ([]string, error)
+	StoreLog(log LogData) error
+	FetchLog() ([]LogData, error)
 }
 type LogData struct {
 	TenantId    int       `json:"tenant_id"`

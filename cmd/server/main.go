@@ -108,5 +108,6 @@ func main() {
 	s.router.HandleFunc("/logs", s.handleLogsPost()).Methods("POST")
 	s.router.HandleFunc("/logs", s.handleLogsGet()).Methods("GET")
 	// TODO: hardcoding of port
+	log.Println("Server running on port 8192")
 	log.Fatal(http.ListenAndServe(":8192", s))
 }

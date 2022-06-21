@@ -29,47 +29,47 @@ A simple yet fast, extensible and robust log aggregator platform written in gola
 	```
 2. Fetch logs based on filters
 	## Request
-	GET `<IP>:<Port>/logs?log_level=ERROR&service_name=loggator&package_name=logs&date=2012-04-23&file_name=repository.go&tenant_id=1`
+	GET `/logs?log_level=ERROR&service_name=loggator&package_name=logs&date=2012-04-23&file_name=repository.go&tenant_id=1`
 	## Response
 	```
 	[
-   {
-      "tenant_id":1,
-      "log_id":4,
-      "log":"this is a error log",
-      "created_at":"2022-06-21T12:23:29.985752Z",
-      "date":"2012-04-23T00:00:00Z",
-      "time":"0000-01-01T23:11:12Z",
-      "log_level":"ERROR",
-      "service_name":"loggator",
-      "file_name":"repository.go",
-      "package_name":"logs"
-   },
-   {
-      "tenant_id":1,
-      "log_id":5,
-      "log":"this is a error log",
-      "created_at":"2022-06-21T12:29:22.952193Z",
-      "date":"2012-04-23T00:00:00Z",
-      "time":"0000-01-01T23:11:12Z",
-      "log_level":"ERROR",
-      "service_name":"loggator",
-      "file_name":"repository.go",
-      "package_name":"logs"
-   },
-   {
-      "tenant_id":1,
-      "log_id":6,
-      "log":"this is a error log",
-      "created_at":"2022-06-21T12:31:46.73274Z",
-      "date":"2012-04-23T00:00:00Z",
-      "time":"0000-01-01T23:11:12Z",
-      "log_level":"ERROR",
-      "service_name":"loggator",
-      "file_name":"repository.go",
-      "package_name":"logs"
-   }
-]
+	   {
+	      "tenant_id":1,
+	      "log_id":4,
+	      "log":"this is a error log",
+	      "created_at":"2022-06-21T12:23:29.985752Z",
+	      "date":"2012-04-23T00:00:00Z",
+	      "time":"0000-01-01T23:11:12Z",
+	      "log_level":"ERROR",
+	      "service_name":"loggator",
+	      "file_name":"repository.go",
+	      "package_name":"logs"
+	   },
+	   {
+	      "tenant_id":1,
+	      "log_id":5,
+	      "log":"this is a error log",
+	      "created_at":"2022-06-21T12:29:22.952193Z",
+	      "date":"2012-04-23T00:00:00Z",
+	      "time":"0000-01-01T23:11:12Z",
+	      "log_level":"ERROR",
+	      "service_name":"loggator",
+	      "file_name":"repository.go",
+	      "package_name":"logs"
+	   },
+	   {
+	      "tenant_id":1,
+	      "log_id":6,
+	      "log":"this is a error log",
+	      "created_at":"2022-06-21T12:31:46.73274Z",
+	      "date":"2012-04-23T00:00:00Z",
+	      "time":"0000-01-01T23:11:12Z",
+	      "log_level":"ERROR",
+	      "service_name":"loggator",
+	      "file_name":"repository.go",
+	      "package_name":"logs"
+	   }
+	]
 	```
 
 

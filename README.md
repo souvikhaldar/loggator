@@ -74,9 +74,9 @@ A simple yet fast, extensible and robust log aggregator platform written in gola
 
 
 # Instructions
-1. To migrate the database:
-	i) [Install `psql`](https://www.calhoun.io/how-to-install-postgresql-9-6-on-mac-os-x/)  
-	ii) Access the database `psql -U postgres`.  
+1. To migrate the database:  
+	i) [Install `psql`](https://www.calhoun.io/how-to-install-postgresql-9-6-on-mac-os-x/)   
+	ii) Access the database `psql -U postgres`.   
 	iii) Create the `loggator` database.  
 	iv) `CREATE TABLE loggator;`  
 	v) Apply the schema `make localmigrateup`.  

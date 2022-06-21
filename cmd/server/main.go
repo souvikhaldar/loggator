@@ -16,10 +16,14 @@ type server struct {
 	logger logs.Repository
 }
 
-func NewServer() *server {
+// NOTE: never hardcode the credentials
+// read from vault, env vars, etc instead
+func NewServer(
+	logger logs.Repository,
+) *server {
 	return &server{
 		router: mux.NewRouter(),
-		logger: db.NewDB(),
+		logger: logger,
 	}
 }
 
@@ -87,8 +91,20 @@ func (s *server) handleLogsGet() http.HandlerFunc {
 }
 
 func main() {
-	s := NewServer()
+	db, err := db.NewDB(
+		"localhost",
+		5432,
+		"postgres",
+		"loggator",
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	s := NewServer(
+		db,
+	)
 	s.router.HandleFunc("/logs", s.handleLogsPost()).Methods("POST")
 	s.router.HandleFunc("/logs", s.handleLogsGet()).Methods("GET")
+	// TODO: hardcoding of port
 	log.Fatal(http.ListenAndServe(":8192", s))
 }

@@ -11,34 +11,30 @@ import (
 	"github.com/souvikhaldar/loggator/pkg/logs"
 )
 
-// NOTE: never hardcode the credentials
-// read from vault, env vars, etc instead
-const (
-	host   = "localhost"
-	port   = 5432
-	user   = "postgres"
-	dbname = "loggator"
-)
-
 type DB struct {
 	db *sql.DB
 }
 
-func NewDB() *DB {
+func NewDB(
+	host string,
+	port int,
+	user string,
+	dbname string,
+) (*DB, error) {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"dbname=%s sslmode=disable",
 		host, port, user, dbname)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	return &DB{
 		db: db,
-	}
+	}, nil
 }
 func (d *DB) StoreLog(log logs.LogData) error {
 	query := `INSERT INTO logs(tenant_id,log,date,time,log_level,service_name,file_name,package_name) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`

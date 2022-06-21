@@ -1,10 +1,13 @@
 package logs
 
-import "time"
+import (
+	"net/url"
+	"time"
+)
 
 type Repository interface {
 	StoreLog(log LogData) error
-	FetchLog() ([]LogData, error)
+	FetchLog(filters url.Values) ([]LogData, error)
 }
 type LogData struct {
 	TenantId    int       `json:"tenant_id"`

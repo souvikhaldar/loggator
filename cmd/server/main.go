@@ -57,7 +57,9 @@ func (s *server) handleLogsPost() http.HandlerFunc {
 // handleLogsGet returns logs based on filters
 func (s *server) handleLogsGet() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		logs, err := s.logger.FetchLog()
+		filters := r.URL.Query()
+		log.Printf("Filters: %+v\n", filters)
+		logs, err := s.logger.FetchLog(filters)
 		if err != nil {
 			err = fmt.Errorf("Error in fetching logs: %s", err)
 			log.Println(err)
@@ -86,7 +88,7 @@ func (s *server) handleLogsGet() http.HandlerFunc {
 
 func main() {
 	s := NewServer()
-	s.router.HandleFunc("/logs/", s.handleLogsPost()).Methods("POST")
-	s.router.HandleFunc("/logs/", s.handleLogsGet()).Methods("GET")
+	s.router.HandleFunc("/logs", s.handleLogsPost()).Methods("POST")
+	s.router.HandleFunc("/logs", s.handleLogsGet()).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8192", s))
 }

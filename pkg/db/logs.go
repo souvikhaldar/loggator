@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/url"
 
 	_ "github.com/lib/pq"
 
@@ -55,9 +56,26 @@ func (d *DB) StoreLog(log logs.LogData) error {
 	return err
 }
 
-func (d *DB) FetchLog() ([]logs.LogData, error) {
+func (d *DB) FetchLog(filters url.Values) ([]logs.LogData, error) {
 	logDatas := make([]logs.LogData, 0)
 	query := `SELECT tenant_id,log_id,log,created_at,date,time,log_level,service_name,file_name,package_name from logs`
+	// NOTE: this introduces possible of SQL-injection vulnerabilty
+	// where the user can provide malicious commands in the query parameters
+	// hence it is not for production use ATM
+	if len(filters) > 0 {
+		first := true
+		for filter, value := range filters {
+			// using the zeroth element of value
+			// for the sake of simplicity
+			if first {
+				query += " WHERE " + filter + "=" + fmt.Sprintf("'%s'", value[0])
+				first = false
+			} else {
+				query += " AND " + filter + "=" + fmt.Sprintf("'%s'", value[0])
+			}
+		}
+	}
+	log.Println("final query: ", query)
 	rows, err := d.db.Query(
 		query,
 	)

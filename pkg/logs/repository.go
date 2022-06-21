@@ -11,12 +11,10 @@ type LogData struct {
 	LogId       int       `json:"log_id"`
 	Log         string    `json:"log"`
 	CreatedAt   time.Time `json:"created_at"`
-	Date        time.Time `json:"date"`
-	Time        time.Time `json:"time"`
+	Date        string    `json:"date"`
+	Time        string    `json:"time"`
 	LogLevel    string    `json:"log_level"`
 	ServiceName string    `json:"service_name"`
 	FileName    string    `json:"file_name"`
 	PackageName string    `json:"package_name"`
 }
-
-// TODO: Add parser for each field

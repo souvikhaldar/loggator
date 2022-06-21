@@ -40,16 +40,7 @@ func NewDB() *DB {
 	}
 }
 func (d *DB) StoreLog(log logs.LogData) error {
-	query := `INSERT INTO logs(
-		tenant_id,
-		log,
-		date,
-		time,
-		log_level,
-		service_name,
-		file_name,
-		package_name,
-	) VALUES($1,$2,$3,$4,$5,$6,$7,$8)`
+	query := `INSERT INTO logs(tenant_id,log,date,time,log_level,service_name,file_name,package_name) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`
 	_, err := d.db.Exec(
 		query,
 		log.TenantId,
@@ -66,7 +57,7 @@ func (d *DB) StoreLog(log logs.LogData) error {
 
 func (d *DB) FetchLog() ([]logs.LogData, error) {
 	logDatas := make([]logs.LogData, 0)
-	query := `SELECT * from logs`
+	query := `SELECT tenant_id,log_id,log,created_at,date,time,log_level,service_name,file_name,package_name from logs`
 	rows, err := d.db.Query(
 		query,
 	)
@@ -78,6 +69,7 @@ func (d *DB) FetchLog() ([]logs.LogData, error) {
 		err := rows.Scan(
 			&ld.TenantId,
 			&ld.LogId,
+			&ld.Log,
 			&ld.CreatedAt,
 			&ld.Date,
 			&ld.Time,

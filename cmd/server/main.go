@@ -57,7 +57,30 @@ func (s *server) handleLogsPost() http.HandlerFunc {
 // handleLogsGet returns logs based on filters
 func (s *server) handleLogsGet() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
+		logs, err := s.logger.FetchLog()
+		if err != nil {
+			err = fmt.Errorf("Error in fetching logs: %s", err)
+			log.Println(err)
+			http.Error(
+				w,
+				err.Error(),
+				http.StatusInternalServerError,
+			)
+		}
+		log.Println("Logs:")
+		for _, l := range logs {
+			log.Printf("%+v\n", l)
+		}
+		if err := json.NewEncoder(w).Encode(logs); err != nil {
+			err = fmt.Errorf("Error in encoding json: %s", err)
+			log.Println(err)
+			http.Error(
+				w,
+				err.Error(),
+				http.StatusInternalServerError,
+			)
+			return
+		}
 	}
 }
 

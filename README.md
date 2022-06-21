@@ -7,6 +7,9 @@ A simple yet fast, extensible and robust log aggregator platform written in gola
 3. Generate charts or graphs or visualize functional performance of the service.
 4. Raise alert for anomalous behaviours like too many ERROR logs, too many INFO logs for a particular endpoint signaling possible DDOS, etc.
 
+# Dependency
+1. https://github.com/golang-migrate/migrate
+
 # Workflow
 1. Send logs to the endpoint 
 	The log agent will parse the logs and send to the above endpoint in the following JSON format
@@ -83,3 +86,4 @@ A simple yet fast, extensible and robust log aggregator platform written in gola
 
 # API documentation
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1921454-9ce96aa1-be53-4128-a9d0-d90b4645d4be?action=collection%2Ffork&collection-url=entityId%3D1921454-9ce96aa1-be53-4128-a9d0-d90b4645d4be%26entityType%3Dcollection%26workspaceId%3D50bf739e-2b62-474b-b442-3ed1b8ed7fa9)
+

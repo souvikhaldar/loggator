@@ -34,6 +34,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // handleLogsPost handles logs as a string and stores it
 func (s *server) handleLogsPost() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Running in handleLogsPost..")
 		ld := new(logs.LogData)
 		if err := json.NewDecoder(r.Body).Decode(ld); err != nil {
 			err = fmt.Errorf("Error in parsing payload: %s", err)
@@ -61,6 +62,7 @@ func (s *server) handleLogsPost() http.HandlerFunc {
 // handleLogsGet returns logs based on filters
 func (s *server) handleLogsGet() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Running in handleLogsGet...")
 		filters := r.URL.Query()
 		log.Printf("Filters: %+v\n", filters)
 		logs, err := s.logger.FetchLog(filters)

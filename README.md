@@ -12,3 +12,5 @@ Fast, extensible and robust log aggregator platform written in golang.
 	iv) `CREATE TABLE loggator;`  
 	v) Apply the schema `make localmigrateup`.  
 
+# API documentation
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6708aa075ed682aac4d3?action=collection%2Fimport)
